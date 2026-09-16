@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zion Synthetic Data Quality Checker</title>
+<meta name="description" content="Score your synthetic dataset: fidelity, downstream utility and privacy risk. 18-point checklist. Free tool by Zion Tech Group.">
+<style>
+:root{--bg:#0a1214;--card:#101e24;--acc:#67e8f9;--txt:#e6f6fb;--mut:#8fb0bb}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt)}
+header{padding:48px 24px 24px;text-align:center;background:linear-gradient(160deg,#0b3644,#0a1214)}
+h1{margin:0 0 8px}.wrap{max-width:860px;margin:0 auto;padding:24px}
+.cat{margin:24px 0 8px;color:var(--acc);font-weight:600;text-transform:uppercase;font-size:.8rem;letter-spacing:.06em}
+.item{display:flex;gap:12px;background:var(--card);border:1px solid #1c3540;border-radius:12px;padding:14px;margin:8px 0;align-items:center}
+.item input{width:20px;height:20px;accent-color:var(--acc)}
+.score{position:sticky;bottom:16px;background:#0e2833;border:1px solid #1d4c5f;border-radius:14px;padding:16px;text-align:center;font-size:1.2rem;margin-top:24px}
+.bar{height:10px;background:#0a1a21;border-radius:6px;margin-top:8px;overflow:hidden}.bar>div{height:100%;background:var(--acc);width:0;transition:width .3s}
+footer{padding:32px 24px;text-align:center;color:var(--mut);font-size:.85rem;border-top:1px solid #16303a;margin-top:40px}
+footer a{color:var(--acc);text-decoration:none;margin:0 8px}
+</style>
+</head>
+<body>
+<header><h1>🧬 Zion Synthetic Data Quality Checker</h1>
+<p>Synthetic data fails quietly. Score fidelity, utility and privacy before training or testing on it.</p></header>
+<div class="wrap" id="app"></div>
+<footer>Part of the <a href="https://ziontechgroup.com">Zion Tech Group</a> AI apps network ·
+<a href="https://ziontechgroup.com/synthdata/">SynthData Studio</a>
+<a href="https://ziontechgroup.com/zion-data-readiness-audit/">Data Readiness</a>
+<a href="https://ziontechgroup.com/zion-prompt-leak-scanner/">Prompt Leak Scanner</a></footer>
+<script>
+const C={
+'Fidelity (does it look real?)':['Univariate distributions match real data (per column)','Correlations/joint distributions preserved','Rare-but-valid categories not dropped','Temporal patterns preserved for time series','Text: n-gram diversity comparable to real corpus'],
+'Utility (does it work?)':['Model trained on synthetic performs comparably on REAL holdout','Downstream eval metrics documented vs real-data baseline','Edge cases from production are representable','Volume scales without quality collapse'],
+'Privacy (does it leak?)':['Membership inference test run (can attackers detect real rows?)','Nearest-neighbor distance: no synthetic row is a near-copy of a real one','Differential privacy budget documented (if DP used)','Identifiers/quasi-identifiers never carried over','Legal/privacy sign-off obtained for the sharing context'],
+'Process':['Generation seed/config versioned','Real and synthetic datasets never mixed unlabeled','Re-validation scheduled as real data drifts','Known limitations documented for consumers']};
+const app=document.getElementById('app');let html='';
+for(const[cat,items]of Object.entries(C)){html+=`<div class="cat">${cat}</div>`+items.map(t=>`<label class="item"><input type="checkbox"><span>${t}</span></label>`).join('');}
+html+=`<div class="score"><div>Synthetic data quality: <b id="pct">0%</b> <span id="v" style="color:var(--mut);font-size:.9rem"></span></div><div class="bar"><div id="fill"></div></div></div>`;
+app.innerHTML=html;
+app.addEventListener('change',()=>{const b=[...app.querySelectorAll('input')];const p=Math.round(b.filter(x=>x.checked).length/b.length*100);
+document.getElementById('pct').textContent=p+'%';document.getElementById('fill').style.width=p+'%';
+document.getElementById('v').textContent=p>=85?'— trustworthy ✅':p>=60?'— usable with caveats':p>=35?'— high risk of silent failure':'— do not train on this yet';});
+</script>
+</body>
+</html>
