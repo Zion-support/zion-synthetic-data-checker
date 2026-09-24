@@ -1,7 +1,16 @@
-# Zion Synthetic Data Quality Checker
+# Synthetic Data Quality Checker
 
-18-point checklist scoring synthetic datasets on fidelity, downstream utility, privacy leakage and process hygiene.
+Fidelity, utility and privacy checklist for synthetic datasets.
 
 **Live app:** https://ziontechgroup.com/zion-synthetic-data-checker/
 
-Part of the [Zion Tech Group](https://ziontechgroup.com) AI apps network. Pairs with SynthData Studio. Sibling apps: [Data Readiness Audit](https://ziontechgroup.com/zion-data-readiness-audit/) · [Prompt Leak Scanner](https://ziontechgroup.com/zion-prompt-leak-scanner/)
+## Features
+- Distribution fidelity checks
+- Downstream utility (train-on-synthetic, test-on-real)
+- Privacy leakage risk checks
+
+## Zion App Network
+Part of the [Zion App Network](https://ziontechgroup.com/apps/).
+Related: [Data Anonymizer](https://github.com/Zion-support/zion-ai-data-anonymizer) · [Data Quality](https://github.com/Zion-support/zion-ai-data-quality) · [Data Readiness Audit](https://github.com/Zion-support/zion-data-readiness-audit) · [Data Validator](https://github.com/Zion-support/ai-data-validator)
+
+© 2026 Zion Tech Group
